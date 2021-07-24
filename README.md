@@ -1,0 +1,2 @@
+# techdegree-javascript-project-10
+ The 10th and last project on the Full Stack JavaScript Techdegree. This is Full Stack App with React on the client side and Express on the server side. It uses React to implement a client for a school database REST API providing a way for users to interact with this database. A user can create an account and sign in to make changes to the database, which contains information about courses.
