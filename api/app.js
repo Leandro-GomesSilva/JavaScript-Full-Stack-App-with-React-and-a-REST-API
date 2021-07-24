@@ -10,6 +10,9 @@ const { sequelize } = require('./models');
 // Importing routes
 const routes = require('./routes');
 
+// Importing CORS
+const cors = require('cors');
+
 // variable to enable global error logging
 const enableGlobalErrorLogging = process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'true';
 
@@ -27,6 +30,9 @@ const enableGlobalErrorLogging = process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'tr
 
 // create the Express app
 const app = express();
+
+// Enabling CORS for all requests
+app.use(cors());
 
 // setting JSON as the format of incomming requests
 app.use(express.json());
