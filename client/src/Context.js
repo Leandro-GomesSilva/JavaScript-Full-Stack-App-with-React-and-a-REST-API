@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import Data from './Data';
 
-// Creating a Context instance
+// Creating and exporting a Context instance of the Context API
 const Context = React.createContext();
 export default Context;
 
+// Creating and export a Provider Component
 export class Provider extends Component {
   
   state = {
@@ -30,8 +31,6 @@ export class Provider extends Component {
       </Context.Provider>
     );
   }
-  
-
 }
 
 export const Consumer = Context.Consumer;

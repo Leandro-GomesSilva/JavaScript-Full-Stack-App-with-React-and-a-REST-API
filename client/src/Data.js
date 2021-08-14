@@ -41,15 +41,31 @@ export default class Data {
     return fetch(url, options);
   }
 
-
-  async getUser() {
+  // Method for calling the GET route 'Get Users' of the API
+  async getUser(userCredentials) {
+    const response = await this.api('/users', 'GET', null, true, userCredentials);
+    if (response.status === 200) {
+      return response.json().then(data => data);
+    } else if (response.status === 401) {
+      return null;
+    } else {
+      throw new Error();
+    }
+  }
   
+  // Method for calling the POST route 'Create User' of the API
+  async createUser(newUser) {
+    const response = await this.api('/users', 'POST', newUser);
+    if (response.status === 201) {
+      return [];
+    } else if (response.status === 400) {
+      return null;
+    } else {
+      throw new Error();
+    }
   }
 
-  async createUser() {
-  
-  }
-
+  // Method for calling the GET route 'Get Courses' of the API
   async getCourses() {
     const response = await this.api('/courses', 'GET');
     if (response.status === 200) {
@@ -61,19 +77,51 @@ export default class Data {
     }
   }
 
-  async getCourseById() {
-    
+  // Method for calling the GET route 'Get Course' (single one) of the API
+  async getCourseById(courseId) {
+    const response = await this.api(`/courses/${courseId}`, 'GET');
+    if (response.status === 200) {
+      return response.json().then(data => data);
+    } else if (response.status === 400) {
+      return null;
+    } else {
+      throw new Error();
+    }
   }
 
-  async createCourse() {
-    
+  // Method for calling the POST route 'Create Course' of the API
+  async createCourse(newCourse, userCredentials) {
+    const response = await this.api('/courses', 'POST', newCourse, true, userCredentials);
+    if (response.status === 201) {
+      return [];
+    } else if (response.status === 400 || response.status === 401) {
+      return null;
+    } else {
+      throw new Error();
+    }
   }
 
-  async updateCourse() {
-    
+  // Method for calling the PUT route 'Update Course' of the API
+  async updateCourse(courseId, updatedCourse, userCredentials) {
+    const response = await this.api(`/courses/${courseId}`, 'PUT', updatedCourse, true, userCredentials);
+    if (response.status === 204) {
+      return [];
+    } else if (response.status === 400 ||response.status === 401 || response.status === 403) {
+      return null;
+    } else {
+      throw new Error();
+    }
   }
 
-  async deleteCourse() {
-    
+  // Method for calling the DELETE route 'Delete Course' of the API
+  async deleteCourse(courseId, userCredentials) {
+    const response = await this.api(`/courses/${courseId}`, 'DELETE', null, true, userCredentials);
+    if (response.status === 204) {
+      return [];
+    } else if (response.status === 401 || response.status === 403) {
+      return null;
+    } else {
+      throw new Error();
+    }
   }
 }
