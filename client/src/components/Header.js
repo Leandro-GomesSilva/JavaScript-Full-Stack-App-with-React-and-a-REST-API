@@ -1,0 +1,27 @@
+import React from 'react';
+//import { NavLink } from 'react-router-dom';
+
+/*
+ *  This component renders the Header of the application. 
+ *  It is a stateless functional component that displays the top menu bar and contains the sign-in and sign-up buttons 
+ *  (if there's not an authenticated user) or the user's name and the sign-out button (if there's an authenticated user).
+ * 
+ */
+
+const Header = () => {
+    return (
+      <header>
+        <div className="wrap header--flex">
+          <h1 className="header--logo"><a href="index.html">Courses</a></h1>
+          <nav>
+            <ul className="header--signedout">
+                <li><a href="sign-up.html">Sign Up</a></li>
+                <li><a href="sign-in.html">Sign In</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    );    
+}
+
+export default Header;

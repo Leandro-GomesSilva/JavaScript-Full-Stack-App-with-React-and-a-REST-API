@@ -1,11 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+
+// Importing CSS style sheets
+import './css/reset.css';
+import './css/global.css';
+
+import { Provider } from './Context';
 import App from './App';
 
 ReactDOM.render(
-  <React.StrictMode>
+  // Wrapping the whole App inside the Provider tags, so that <App /> is now a child of Provider and can be rendered by it
+  <Provider>
     <App />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );

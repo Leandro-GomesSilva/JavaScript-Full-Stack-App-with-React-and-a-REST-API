@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 /* import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'; */
 
 // Importing components
-    /*********/
+import Header from './components/Header';
+import Courses from './components/Courses';
 
 // Redeclaring the App Component as a Class Component
 class App extends Component {
@@ -18,22 +19,10 @@ class App extends Component {
   
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <React.Fragment>
+        <Header />
+        <Courses />
+      </React.Fragment>
     );
   }
 }
