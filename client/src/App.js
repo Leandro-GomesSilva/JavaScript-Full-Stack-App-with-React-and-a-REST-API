@@ -8,6 +8,7 @@ import Courses from './components/Courses';
 import CourseDetails from './components/CourseDetails';
 import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
+import UserSignOut from './components/UserSignOut';
 import CreateCourse from './components/CreateCourse';
 import UpdateCourse from './components/UpdateCourse';
 
