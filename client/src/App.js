@@ -28,13 +28,13 @@ class App extends Component {
             <BrowserRouter>
                 <Header />
                 <Switch>
-                    <Route exact path="/" component={ () => <Courses /> } />
-                    <Route path="/courses/create" component={ () => <CreateCourse /> } />
-                    <Route path="/courses/:query" component={ () => <CourseDetails /> } />
-                    <Route path="/courses/:query/update" component={ () => <UpdateCourse /> } />
-                    <Route path="/signin" component={ () => <UserSignIn /> } />
-                    <Route path="/signup" component={ () => <UserSignUp /> } />
-                    <Route path="/signout" component={ () => <UserSignOut /> } />
+                    <Route exact path="/" component={ Courses } />
+                    <Route path="/courses/create" component={ CreateCourse } />
+                    <Route path="/courses/:id" component={ CourseDetails } />
+                    <Route path="/courses/:id/update" component={ UpdateCourse } />
+                    <Route path="/signin" component={ UserSignIn } />
+                    <Route path="/signup" component={ UserSignUp } />
+                    <Route path="/signout" component={ UserSignOut } />
                 </Switch>
             </BrowserRouter>
         );
