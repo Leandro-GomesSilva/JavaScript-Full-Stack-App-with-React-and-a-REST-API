@@ -26,31 +26,31 @@ export default class UserSignIn extends Component {
                 <h2>Sign Up</h2>
                 
                 <form>
-                    <label>First Name</label>
+                    <label htmlFor="firstName">First Name</label>
                     <input 
                         id="firstName" 
                         name="firstName" 
                         type="text" 
                         value={firstName} />
-                    <label>Last Name</label>
+                    <label htmlFor="lastName">Last Name</label>
                     <input 
                         id="lastName" 
                         name="lastName" 
                         type="text" 
                         value={lastName} />
-                    <label>Email Address</label>
+                    <label htmlFor="emailAddress">Email Address</label>
                     <input 
                         id="emailAddress" 
                         name="emailAddress" 
                         type="email" 
                         value={userEmail} />
-                    <label>Password</label>
+                    <label htmlFor="password">Password</label>
                     <input 
                         id="password" 
                         name="password" 
                         type="password" 
                         value={password} />
-                    <label>Confirm Password</label>
+                    <label htmlFor="confirmPassword">Confirm Password</label>
                     <input 
                         id="confirmPassword" 
                         name="confirmPassword" 

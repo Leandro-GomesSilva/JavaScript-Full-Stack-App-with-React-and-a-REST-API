@@ -20,13 +20,13 @@ export default class UserSignIn extends Component {
                 <h2>Sign In</h2>
                 
                 <form>
-                    <label>Email Address</label>
+                    <label htmlFor="emailAddress">Email Address</label>
                     <input 
                         id="emailAddress" 
                         name="emailAddress" 
                         type="email" 
                         value={userEmail} />
-                    <label>Password</label>
+                    <label htmlFor="password">Password</label>
                     <input 
                         id="password" 
                         name="password" 
