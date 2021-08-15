@@ -9,9 +9,9 @@ import { Provider } from './Context';
 import App from './App';
 
 ReactDOM.render(
-  // Wrapping the whole App inside the Provider tags, so that <App /> is now a child of Provider and can be rendered by it
-  <Provider>
-    <App />
-  </Provider>,
-  document.getElementById('root')
+    // Wrapping the whole App inside the Provider tags, so that <App /> is now a child of Provider and can be rendered by it
+    <Provider>
+        <App />
+    </Provider>,
+    document.getElementById('root')
 );
