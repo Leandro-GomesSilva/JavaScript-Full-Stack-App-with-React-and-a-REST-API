@@ -8,6 +8,8 @@ import Courses from './components/Courses';
 import CourseDetails from './components/CourseDetails';
 import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
+import CreateCourse from './components/CreateCourse';
+import UpdateCourse from './components/UpdateCourse';
 
 // Redeclaring the App Component as a Class Component
 class App extends Component {
@@ -25,9 +27,9 @@ class App extends Component {
             <React.Fragment>
                 <Header />
                 <Courses />
-                <CourseDetails />
-                <UserSignIn />
-                <UserSignUp />
+                <CreateCourse />
+                <UpdateCourse />
+                
             </React.Fragment>
         );
     }
