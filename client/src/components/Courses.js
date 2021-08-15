@@ -1,6 +1,6 @@
 // Importing React related libraries and objects
 import React, { Component } from 'react';
-//import { Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 // Importing components
 import Context from '../Context';

@@ -1,6 +1,6 @@
 // Importing React related libraries and objects
 import React, { Component } from 'react';
-/* import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'; */
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 // Importing components
 import Header from './components/Header';
@@ -25,13 +25,18 @@ class App extends Component {
     
     render() {
         return (
-            <React.Fragment>
+            <BrowserRouter>
                 <Header />
-                <Courses />
-                <CreateCourse />
-                <UpdateCourse />
-                
-            </React.Fragment>
+                <Switch>
+                    <Route exact path="/" component={ () => <Courses /> } />
+                    <Route path="/courses/create" component={ () => <CreateCourse /> } />
+                    <Route path="/courses/:query" component={ () => <CourseDetails /> } />
+                    <Route path="/courses/:query/update" component={ () => <UpdateCourse /> } />
+                    <Route path="/signin" component={ () => <UserSignIn /> } />
+                    <Route path="/signup" component={ () => <UserSignUp /> } />
+                    <Route path="/signout" component={ () => <UserSignOut /> } />
+                </Switch>
+            </BrowserRouter>
         );
     }
 }
