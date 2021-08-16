@@ -43,10 +43,12 @@ class UpdateCourse extends Component {
         }
     }
 
+    // This method handles 'value' changes for the 4 input and textarea tags of this component
     handleValueChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     }
 
+    // This method handles the 'cancel' button, sending the user back to the previous route.
     handleCancelButton = (e) => {
         e.preventDefault();
         this.props.history.goBack();
