@@ -1,6 +1,6 @@
 // Importing React related libraries and objects
 import React, { Component } from 'react';
-//import { Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 // Importing components
 import Context from '../Context';
@@ -14,7 +14,7 @@ import Context from '../Context';
 
 class CourseDetails extends Component {
 
-    static contextType = Context;
+    static contextType = Context;   // Granting access to Context
 
     state = {
         courseInformation: [],
@@ -22,11 +22,11 @@ class CourseDetails extends Component {
     }
 
     componentDidMount() {
-        this.context.data.getCourseById(1)
+        this.context.data.getCourseById(this.props.id)
             .then(data => this.setState({ 
                 courseInformation: data,
                 user: data.User,
-            }) )
+            }));
     }
 
     render() {  
@@ -34,14 +34,24 @@ class CourseDetails extends Component {
             courseInformation,
             user,
         } = this.state;
-
+        
         return (
             <React.Fragment>
                 <div className="actions--bar">
                         <div className="wrap">
-                                <a className="button" href="update-course.html">Update Course</a>
-                                <a className="button" href="/">Delete Course</a>
-                                <a className="button button-secondary" href="index.html">Return to List</a>
+                                <Link to={{
+                                    pathname: `/courses/${this.props.id}/update`,
+                                    state: {
+                                        courseTitle: courseInformation.title,
+                                        estimatedTime: courseInformation.estimatedTime,
+                                        courseDescription: courseInformation.description,
+                                        materialsNeeded: courseInformation.materialsNeeded,
+                                        firstName: user.firstName,
+                                        lastName: user.lastName,
+                                    }
+                                }} className="button">Update Course</Link>
+                                <Link to={`/courses/${this.props.id}/update`} className="button">Delete Course</Link>
+                                <Link to='/' className="button button-secondary">Return to List</Link>
                         </div>
                 </div>
                 
@@ -52,7 +62,7 @@ class CourseDetails extends Component {
                                         <div>
                                                 <h3 className="course--detail--title">Course</h3>
                                                 <h4 className="course--name">{courseInformation.title}</h4>
-                                                <p>{`By ${this.state.user.firstName} ${user.lastName}`}</p>
+                                                <p>{`By ${user.firstName} ${user.lastName}`}</p>
                                                 <p>{courseInformation.description}</p>
                                         </div>
                                         <div>
@@ -61,7 +71,7 @@ class CourseDetails extends Component {
 
                                                 <h3 className="course--detail--title">Materials Needed</h3>
                                                 <ul className="course--detail--list">
-                                                        {courseInformation.materialsNeeded}
+                                                    {courseInformation.materialsNeeded}
                                                 </ul>
                                         </div>
                                 </div>
