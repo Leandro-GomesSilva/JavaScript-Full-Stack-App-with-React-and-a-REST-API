@@ -43,7 +43,11 @@ class UpdateCourse extends Component {
         }
     }
 
-    handleCancelButton(e) {
+    handleValueChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
+    handleCancelButton = (e) => {
         e.preventDefault();
         this.props.history.goBack();
     }
@@ -61,22 +65,23 @@ class UpdateCourse extends Component {
         } = this.state;
 
         return (
-            <div class="wrap">
+            <div className="wrap">
                 <h2>Update Course</h2>
                 <form>
-                    <div class="main--flex">
+                    <div className="main--flex">
                         <div>
                             <label htmlFor="courseTitle">Course Title</label>
                             <input 
                                 id="courseTitle" 
                                 name="courseTitle" 
                                 type="text" 
-                                value={courseTitle} />
+                                value={courseTitle}
+                                onChange={this.handleValueChange} />
 
                             <p>{`By ${firstName} ${lastName}`}</p>
 
                             <label htmlFor="courseDescription">Course Description</label>
-                            <textarea id="courseDescription" name="courseDescription" value={courseDescription}></textarea>
+                            <textarea id="courseDescription" name="courseDescription" value={courseDescription} onChange={this.handleValueChange}></textarea>
                         </div>
                         <div>
                             <label htmlFor="estimatedTime">Estimated Time</label>
@@ -84,14 +89,15 @@ class UpdateCourse extends Component {
                                 id="estimatedTime" 
                                 name="estimatedTime" 
                                 type="text" 
-                                value={estimatedTime} />
+                                value={estimatedTime}
+                                onChange={this.handleValueChange} />
 
                             <label htmlFor="materialsNeeded">Materials Needed</label>
-                            <textarea id="materialsNeeded" name="materialsNeeded" value={materialsNeeded}></textarea>
+                            <textarea id="materialsNeeded" name="materialsNeeded" value={materialsNeeded} onChange={this.handleValueChange}></textarea>
                         </div>
                     </div>
-                    <button class="button" type="submit">Update Course</button>
-                    <button class="button button-secondary" onClick={(e) => this.handleCancelButton(e)}>Cancel</button>
+                    <button className="button" type="submit">Update Course</button>
+                    <button className="button button-secondary" onClick={this.handleCancelButton}>Cancel</button>
                 </form>
             </div>
         );
