@@ -1,6 +1,13 @@
+// Importing React related modules
 import React, { Component } from 'react';
 
+// Importing the instance of the Context API
+import Context from '../Context';
+
 export default class CreateCourse extends Component {
+    
+    static contextType = Context;   // Granting access to Context
+
     state = {
         courseTitle: '',
         courseDescription: '',
@@ -18,6 +25,19 @@ export default class CreateCourse extends Component {
     handleCancelButton = (e) => {
         e.preventDefault();
         this.props.history.goBack();
+    }
+
+    // The following method sends a POST request to the REST API
+    createCourse (e, courseTitle, courseDescription, estimatedTime, materialsNeeded) {
+        e.target.preventDefault();
+
+        const newCourse = { 
+            title: courseTitle,
+            description: courseDescription,
+            estimatedTime,
+            materialsNeeded
+        }
+        this.context.data.createCourse(newCourse);
     }
 
     render() {
@@ -67,7 +87,7 @@ export default class CreateCourse extends Component {
                             <textarea id="materialsNeeded" name="materialsNeeded" value={materialsNeeded} onChange={this.handleValueChange}></textarea>
                         </div>
                     </div>
-                    <button className="button" type="submit">Create Course</button>
+                    <button className="button" type="submit" onClick={(e) => this.createCourse(e, courseTitle, courseDescription, estimatedTime, materialsNeeded)}>Create Course</button>
                     <button className="button button-secondary" onClick={this.handleCancelButton}>Cancel</button>
                 </form>
             </div>
