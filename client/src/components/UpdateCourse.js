@@ -1,7 +1,8 @@
+// Importing React related modules
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 
-// Importing components
+// Importing the instance of the Context API
 import Context from '../Context';
 
 class UpdateCourse extends Component {

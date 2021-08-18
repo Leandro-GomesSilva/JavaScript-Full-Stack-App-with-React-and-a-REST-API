@@ -1,8 +1,8 @@
-// Importing React related libraries and objects
+// Importing React related modules
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-// Importing components
+// Importing the instance of the Context API
 import Context from '../Context';
 
 /*

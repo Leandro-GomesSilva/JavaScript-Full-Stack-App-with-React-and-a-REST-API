@@ -14,8 +14,7 @@ import Context from '../Context';
 
 class Courses extends Component {
 
-    // To grant access to Context
-    static contextType = Context;
+    static contextType = Context;   // Granting access to Context
 
     state = {
         courseObjects: [],

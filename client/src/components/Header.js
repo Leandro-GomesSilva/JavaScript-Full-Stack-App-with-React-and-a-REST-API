@@ -1,5 +1,9 @@
+// Importing React related modules
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+
+// Importing the Consumer object from the instance of the Context API
+import { Consumer } from '../Context';
 
 /*
  *  This component renders the Header of the application. 
@@ -9,19 +13,32 @@ import { NavLink } from 'react-router-dom';
  */
 
 const Header = () => {
-        return (
-            <header>
-                <div className="wrap header--flex">
-                    <h1 className="header--logo"><NavLink to="/">Courses</NavLink></h1>
-                    <nav>
-                        <ul className="header--signedout">
-                                <li><NavLink to="/signup">Sign Up</NavLink></li>
-                                <li><NavLink to="/signin">Sign In</NavLink></li>
-                        </ul>
-                    </nav>
-                </div>
-            </header>
-        );    
+    return (
+        <Consumer>
+            { context => {
+                return (
+                    <header>
+                        <div className="wrap header--flex">
+                            <h1 className="header--logo"><NavLink to="/">Courses</NavLink></h1>
+                            <nav>
+                                { context.authenticatedUser ? (
+                                    <ul className="header--signedin">
+                                        <li>{`Welcome, ${context.authenticatedUser.firstName} ${context.authenticatedUser.lastName}`}</li>
+                                        <li><NavLink to="/signout">Sign Out</NavLink></li>
+                                    </ul>
+                                ) : (
+                                    <ul className="header--signedout">
+                                        <li><NavLink to="/signup">Sign Up</NavLink></li>
+                                        <li><NavLink to="/signin">Sign In</NavLink></li>
+                                    </ul>
+                                )}
+                            </nav>
+                        </div>
+                    </header>
+                );
+            }}
+        </Consumer>
+    )
 }
 
 export default Header;
