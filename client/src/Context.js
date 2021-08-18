@@ -27,6 +27,7 @@ export class Provider extends Component {
         // Checks if the API answered with a response status 401 (Unauthorized) i.e. returned "null"
         if (user != null) {
             // If it did not return 'null', passes the user to the Global State
+            user.password = password;
             this.setState( () => {
                 return {
                     authenticatedUser: user,

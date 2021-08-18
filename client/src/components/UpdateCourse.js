@@ -26,9 +26,9 @@ class UpdateCourse extends Component {
             this.context.data.getCourseById(this.props.id)
             .then(data => this.setState({ 
                 courseTitle: data.title,
-                estimatedTime: data.estimatedTime,
+                estimatedTime: data.estimatedTime || "",
                 courseDescription: data.description,
-                materialsNeeded: data.materialsNeeded,
+                materialsNeeded: data.materialsNeeded || "",
                 firstName: data.User.firstName,
                 lastName: data.User.lastName,
             }));
@@ -55,6 +55,37 @@ class UpdateCourse extends Component {
         this.props.history.goBack();
     }
 
+    handleSubmit = (e) => {
+        e.preventDefault();
+
+        const updatedCourse = { 
+            title: this.state.courseTitle,
+            description: this.state.courseDescription,
+            estimatedTime: this.state.estimatedTime,
+            materialsNeeded: this.state.materialsNeeded,
+            userId: this.context.authenticatedUser.id,
+        }
+
+        const authenticatedUser = {
+            username: this.context.authenticatedUser.emailAddress,
+            password: this.context.authenticatedUser.password,
+        }
+        
+        this.context.data.updateCourse(this.props.id, updatedCourse, authenticatedUser)
+            .then( errorsArray => {
+                if (errorsArray.length === 0) {
+                    this.props.history.push(`/courses/${this.props.id}`);
+                } else {
+                    const errors = errorsArray.map( (error, index) => {
+                        return (
+                        <li key={index}>{error}</li>
+                        );
+                    });
+                    this.setState({ errors });
+                }
+            })
+    }
+
     render() {
         // Storing state properties into variables
         const {
@@ -70,6 +101,16 @@ class UpdateCourse extends Component {
         return (
             <div className="wrap">
                 <h2>Update Course</h2>
+                { errors.length > 0 ?
+                    (
+                    <div className="validation--errors">
+                        <h3>Validation Errors</h3>
+                        <ul>
+                            { errors }
+                        </ul>
+                    </div>
+                    ) : ( null )
+                }
                 <form>
                     <div className="main--flex">
                         <div>
@@ -99,7 +140,7 @@ class UpdateCourse extends Component {
                             <textarea id="materialsNeeded" name="materialsNeeded" value={materialsNeeded} onChange={this.handleValueChange}></textarea>
                         </div>
                     </div>
-                    <button className="button" type="submit">Update Course</button>
+                    <button className="button" type="submit" onClick={ (e) => this.handleSubmit(e) }>Update Course</button>
                     <button className="button button-secondary" onClick={this.handleCancelButton}>Cancel</button>
                 </form>
             </div>

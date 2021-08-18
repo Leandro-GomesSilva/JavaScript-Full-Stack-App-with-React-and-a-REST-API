@@ -49,7 +49,7 @@ export default class Data {
         if (res.status === 200) {
             return res.json().then(data => data);
         } else if (res.status === 401) {
-            return null;
+            return null;    // In case no user was found with the credentials provided
         } else {
             throw new Error();
         }
@@ -61,7 +61,7 @@ export default class Data {
         if (res.status === 201) {
             return [];
         } else if (res.status === 400) {
-            return null;
+            return res.json().then(data => data.errors);    // Array with error messages, in case an existing e-mail address or incomplete data was provided
         } else {
             throw new Error();
         }
@@ -72,8 +72,6 @@ export default class Data {
         const res = await this.api('/courses', 'GET');
         if (res.status === 200) {
             return res.json().then(data => data);
-        } else if (res.status === 400) {
-            return null;
         } else {
             throw new Error();
         }
@@ -84,8 +82,6 @@ export default class Data {
         const res = await this.api(`/courses/${courseId}`, 'GET');
         if (res.status === 200) {
             return res.json().then(data => data);
-        } else if (res.status === 400) {
-            return null;
         } else {
             throw new Error();
         }
@@ -96,8 +92,8 @@ export default class Data {
         const res = await this.api('/courses', 'POST', newCourse, true, userCredentials);
         if (res.status === 201) {
             return [];
-        } else if (res.status === 400 || res.status === 401) {
-            return null;
+        } else if (res.status === 400) {
+            return res.json().then(data => data.errors);    // Array with error messages in case incomplete data was provided
         } else {
             throw new Error();
         }
@@ -108,8 +104,10 @@ export default class Data {
         const res = await this.api(`/courses/${courseId}`, 'PUT', updatedCourse, true, userCredentials);
         if (res.status === 204) {
             return [];
-        } else if (res.status === 400 ||res.status === 401 || res.status === 403) {
-            return null;
+        } else if (res.status === 400) {
+            return res.json().then(data => data.errors);    // Array with error messages in case incomplete data was provided
+        } else if (res.status === 403) {
+            return res.json().then(data => data);   // Object with a message property describing the error
         } else {
             throw new Error();
         }
@@ -120,8 +118,8 @@ export default class Data {
         const res = await this.api(`/courses/${courseId}`, 'DELETE', null, true, userCredentials);
         if (res.status === 204) {
             return [];
-        } else if (res.status === 401 || res.status === 403) {
-            return null;
+        } else if (res.status === 403) {
+            return res.json().then(data => data);   // Object with a message property describing the error
         } else {
             throw new Error();
         }

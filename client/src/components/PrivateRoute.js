@@ -12,7 +12,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {   // Renames the c
                 <Route
                 { ...rest }     // Destructures and passes all elements of the variable 'rest' to the Private Route as props
                 render={ props => 
-                    context.authenticatedUser?  // Checks if there is an authenticated user
+                    context.authenticatedUser ?  // Checks if there is an authenticated user
                     ( <Component {...props} />  // If yes, renders the protected component
                     ) : (
                     <Redirect to='/signin' />   // If not, redirects the user to the 'signin' route

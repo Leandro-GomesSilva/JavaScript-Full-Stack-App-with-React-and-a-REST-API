@@ -23,7 +23,7 @@ class UserSignIn extends Component {
             .then( user => {
                 if (user === null) {
                     this.setState(() => {
-                        return { errros: [ 'Sign-in failed' ] };
+                        return { errors: [ 'Sign-in failed' ] };
                     });
                 } else {
                     this.props.history.goBack();
@@ -54,7 +54,6 @@ class UserSignIn extends Component {
         return (
             <div className="form--centered">
                 <h2>Sign In</h2>
-                
                 <form onSubmit={this.handleSubmit}>
                     <label htmlFor="emailAddress">Email Address</label>
                     <input 
@@ -73,6 +72,12 @@ class UserSignIn extends Component {
                     <button className="button" type="submit">Sign In</button>
                     <button className="button button-secondary" onClick={this.handleCancelButton}>Cancel</button>
                 </form>
+                { 
+                    errors.length > 0 ?
+                    <div className="validation--errors"><h3>{errors}</h3></div>
+                    :
+                    null
+                }
                 <p>Don't have a user account? Click here to <Link to="/signup">sign up</Link>!</p>
             
             </div>

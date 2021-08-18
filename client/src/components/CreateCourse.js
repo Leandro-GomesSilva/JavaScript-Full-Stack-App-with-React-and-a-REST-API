@@ -28,16 +28,35 @@ export default class CreateCourse extends Component {
     }
 
     // The following method sends a POST request to the REST API
-    createCourse (e, courseTitle, courseDescription, estimatedTime, materialsNeeded) {
-        e.target.preventDefault();
+    handleSubmit = (e) => {
+        e.preventDefault();
 
         const newCourse = { 
-            title: courseTitle,
-            description: courseDescription,
-            estimatedTime,
-            materialsNeeded
+            title: this.state.courseTitle,
+            description: this.state.courseDescription,
+            estimatedTime: this.state.estimatedTime,
+            materialsNeeded: this.state.materialsNeeded,
+            userId: this.context.authenticatedUser.id,
         }
-        this.context.data.createCourse(newCourse);
+
+        const authenticatedUser = {
+            username: this.context.authenticatedUser.emailAddress,
+            password: this.context.authenticatedUser.password,
+        }
+        
+        this.context.data.createCourse(newCourse, authenticatedUser)
+            .then( errorsArray => {
+                if (errorsArray.length === 0) {
+                    this.props.history.push("/");
+                } else {
+                    const errors = errorsArray.map( (error, index) => {
+                        return (
+                        <li key={index}>{error}</li>
+                        );
+                    });
+                    this.setState({ errors });
+                }
+            })
     }
 
     render() {
@@ -49,17 +68,20 @@ export default class CreateCourse extends Component {
             materialsNeeded,
             errors,
         } = this.state;
-
+        
         return (
             <div className="wrap">
                 <h2>Create Course</h2>
-                <div className="validation--errors">
-                    <h3>Validation Errors</h3>
-                    <ul>
-                        <li>Please provide a value for "Title"</li>
-                        <li>Please provide a value for "Description"</li>
-                    </ul>
-                </div>
+                { errors.length > 0 ?
+                    (
+                    <div className="validation--errors">
+                        <h3>Validation Errors</h3>
+                        <ul>
+                            { errors }
+                        </ul>
+                    </div>
+                    ) : ( null )
+                }
                 <form>
                     <div className="main--flex">
                         <div>
@@ -87,7 +109,7 @@ export default class CreateCourse extends Component {
                             <textarea id="materialsNeeded" name="materialsNeeded" value={materialsNeeded} onChange={this.handleValueChange}></textarea>
                         </div>
                     </div>
-                    <button className="button" type="submit" onClick={(e) => this.createCourse(e, courseTitle, courseDescription, estimatedTime, materialsNeeded)}>Create Course</button>
+                    <button className="button" type="submit" onClick={ (e) => this.handleSubmit(e) }>Create Course</button>
                     <button className="button button-secondary" onClick={this.handleCancelButton}>Cancel</button>
                 </form>
             </div>
