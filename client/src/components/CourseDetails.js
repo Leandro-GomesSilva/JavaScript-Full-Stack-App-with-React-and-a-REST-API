@@ -1,6 +1,7 @@
 // Importing React related modules
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 
 // Importing the instance of the Context API
 import Context from '../Context';
@@ -63,16 +64,16 @@ class CourseDetails extends Component {
                                                 <h3 className="course--detail--title">Course</h3>
                                                 <h4 className="course--name">{courseInformation.title}</h4>
                                                 <p>{`By ${user.firstName} ${user.lastName}`}</p>
-                                                <p>{courseInformation.description}</p>
+                                                <ReactMarkdown>{courseInformation.description}</ReactMarkdown>
                                         </div>
                                         <div>
                                                 <h3 className="course--detail--title">Estimated Time</h3>
                                                 <p>{courseInformation.estimatedTime}</p>
 
                                                 <h3 className="course--detail--title">Materials Needed</h3>
-                                                <ul className="course--detail--list">
+                                                <ReactMarkdown className="course--detail--list">
                                                     {courseInformation.materialsNeeded}
-                                                </ul>
+                                                </ReactMarkdown>
                                         </div>
                                 </div>
                         </form>
