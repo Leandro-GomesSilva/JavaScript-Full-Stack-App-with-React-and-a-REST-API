@@ -40,18 +40,24 @@ class CourseDetails extends Component {
             <React.Fragment>
                 <div className="actions--bar">
                         <div className="wrap">
-                                <Link to={{
-                                    pathname: `/courses/${this.props.id}/update`,
-                                    state: {
-                                        courseTitle: courseInformation.title,
-                                        estimatedTime: courseInformation.estimatedTime,
-                                        courseDescription: courseInformation.description,
-                                        materialsNeeded: courseInformation.materialsNeeded,
-                                        firstName: user.firstName,
-                                        lastName: user.lastName,
-                                    }
-                                }} className="button">Update Course</Link>
-                                <Link to={`/courses/${this.props.id}/update`} className="button">Delete Course</Link>
+                                { this.context.authenticatedUser && this.context.authenticatedUser.id === user.id ? (
+                                    <React.Fragment>
+                                        <Link to={{
+                                            pathname: `/courses/${this.props.id}/update`,
+                                            state: {
+                                                courseTitle: courseInformation.title,
+                                                estimatedTime: courseInformation.estimatedTime,
+                                                courseDescription: courseInformation.description,
+                                                materialsNeeded: courseInformation.materialsNeeded,
+                                                firstName: user.firstName,
+                                                lastName: user.lastName,
+                                            }
+                                        }} className="button">Update Course</Link>
+                                        <Link to={`/courses/${this.props.id}/update`} className="button">Delete Course</Link>
+                                    </React.Fragment>
+                                ) : ( 
+                                    null 
+                                )}
                                 <Link to='/' className="button button-secondary">Return to List</Link>
                         </div>
                 </div>
