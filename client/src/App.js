@@ -11,6 +11,7 @@ import UserSignUp from './components/UserSignUp';
 import UserSignOut from './components/UserSignOut';
 import CreateCourse from './components/CreateCourse';
 import UpdateCourse from './components/UpdateCourse';
+import PrivateRoute from './components/PrivateRoute';
 
 // Redeclaring the App Component as a Class Component
 class App extends Component {
@@ -29,9 +30,9 @@ class App extends Component {
                 <Header />
                 <Switch>
                     <Route exact path="/" component={ Courses } />
-                    <Route path="/courses/create" component={ CreateCourse } />
+                    <PrivateRoute path="/courses/create" component={ CreateCourse } />
                     <Route exact path="/courses/:id" component={ ({ match }) => <CourseDetails id = {match.params.id}/> } />
-                    <Route path="/courses/:id/update" component={ ({ match }) => <UpdateCourse id = {match.params.id}/> } />
+                    <PrivateRoute path="/courses/:id/update" component={ ({ match }) => <UpdateCourse id = {match.params.id}/> } />
                     <Route path="/signin" component={ UserSignIn } />
                     <Route path="/signup" component={ UserSignUp } />
                     <Route path="/signout" component={ UserSignOut } />
