@@ -204,6 +204,20 @@ input:focus, button:focus, .button:focus, textarea:focus {
     outline: 2px solid #332a40;
 }
 
+/* Custom CSS   */
+.course--link:hover {
+    background: #63537d;
+}
+
+.course--add--module:hover {
+    background: #c0bdc5;
+}
+
+.active {
+    font-weight: bolder;
+}
+/* End of Custom CSS    */
+
 @media screen and (min-width: 600px) {
     .header--signedin li {
         display: inline-block;

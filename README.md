@@ -11,7 +11,7 @@
   - ...
 
 ## Extras:
-  - ...
+  - Two custom CSS rules: Hover effect on anchor elements of the Courses component (class 'course--link' and 'course--add--module') and design rule for the class 'active' created by the NavLink component)
 
 ## Instructions:
   - Download or clone the repository
