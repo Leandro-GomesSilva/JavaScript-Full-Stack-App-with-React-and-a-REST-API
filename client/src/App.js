@@ -20,15 +20,6 @@ import UnhandledError from './components/UnhandledError';
 
 // Redeclaring the App Component as a Class Component
 class App extends Component {
-    
-    /* Testing CORS i.e. the connection between the client and the API with an IIFE (Immediately-invoked Function Expression)
-    componentDidMount() {
-        ( async function () {
-            const response = await fetch('http://localhost:5000/api/courses');
-            response.json().then(data => console.log("It is working!", data));
-        })()
-    };  */
-    
     render() {
         return (
             <BrowserRouter>

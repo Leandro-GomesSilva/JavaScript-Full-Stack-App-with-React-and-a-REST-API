@@ -25,7 +25,6 @@ class UserSignIn extends Component {
                     this.setState(() => {
                         return { errors: [ 'Sign-in failed' ] };
                     });
-                    console.log(this.props)
                 } else {
                     this.props.location.state ?
                         this.props.history.push(this.props.location.state.previousLocation)

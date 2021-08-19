@@ -1,4 +1,7 @@
+// Importing React related libraries and objects
 import React, { Component } from 'react';
+
+// Importing further packages and modules
 import Data from './Data';
 import Cookies from 'js-cookie';
 
