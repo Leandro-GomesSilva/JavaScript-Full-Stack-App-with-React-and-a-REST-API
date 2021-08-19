@@ -15,7 +15,12 @@ const PrivateRoute = ({ component: Component, ...rest }) => {   // Renames the c
                     context.authenticatedUser ?  // Checks if there is an authenticated user
                     ( <Component {...props} />  // If yes, renders the protected component
                     ) : (
-                    <Redirect to='/signin' />   // If not, redirects the user to the 'signin' route
+                    <Redirect to={{             // If not, redirects the user to the 'signin' route
+                        pathname: '/signin',
+                        state: {
+                            previousLocation: props.location,
+                        },
+                    }}  />
                     )
                 } />
             )}

@@ -25,11 +25,19 @@ class UserSignIn extends Component {
                     this.setState(() => {
                         return { errors: [ 'Sign-in failed' ] };
                     });
+                    console.log(this.props)
                 } else {
-                    this.props.history.goBack();
+                    this.props.location.state ?
+                        this.props.history.push(this.props.location.state.previousLocation)
+                        :
+                        this.props.history.goBack();
+
                     console.log(`Success! ${this.context.authenticatedUser.firstName} ${this.context.authenticatedUser.lastName} is logged in.`);
                 }
             })
+            .catch( () => {
+                this.props.history.push("/error");
+            });
     }
 
     // This method handles 'value' changes for the 4 input and textarea tags of this component

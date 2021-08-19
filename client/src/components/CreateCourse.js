@@ -95,7 +95,6 @@ export default class CreateCourse extends Component {
                                 type="text" 
                                 value={courseTitle}
                                 onChange={this.handleValueChange} />
-                            <p>PLACEHOLDER</p>
                             <label htmlFor="courseDescription">Course Description</label>
                             <textarea id="courseDescription" name="courseDescription" value={courseDescription} onChange={this.handleValueChange}></textarea>
                         </div>
