@@ -2,14 +2,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-// Importing components
+// Importing the instance of the Context API
 import Context from '../Context';
 
 /*
  *  Courses Component
- *  This is a stateful class component. 
- *  It lists the Courses by retrieving them from the REST API.
- *   
+ *      This is a stateful class component that retrieves a list of courses from the REST API, renders a list of courses
+ *  linking them with the corresponding 'CourseDetail' component and finally renders a link to the 'CreateCourse'
+ *  component.
  */
 
 class Courses extends Component {
@@ -25,7 +25,7 @@ class Courses extends Component {
         this.context.data.getCourses()
             .then(data => data.map( course => this.setState( prevState => ({ courseObjects: [ ...prevState.courseObjects, course ] })) ))
             .catch( () => {
-                this.props.history.push("/error");
+                this.props.history.push("/error");      // If further errors happen, redirects to 'error'
             });
     }
 

@@ -31,7 +31,7 @@ export default class UserSignIn extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         
-        if (this.state.password === this.state.confirmPassword) {
+        if (this.state.password === this.state.confirmPassword) {   // Password validation
             const newUser = { 
                 firstName: this.state.firstName,
                 lastName: this.state.lastName,
@@ -39,29 +39,28 @@ export default class UserSignIn extends Component {
                 password: this.state.password,
             }
             
-            this.context.data.createUser(newUser)
+            this.context.data.createUser(newUser)           // Calls the API route
                 .then( errorsArray => {
-                    if (errorsArray.length === 0) {
+                    if (errorsArray.length === 0) {         // If no errors are returned, redirects to the course route
                         this.props.history.push("/");
                     } else {
                         const errors = errorsArray.map( (error, index) => {
                             return (
-                            <li key={index}>{error}</li>
+                            <li key={index}>{error}</li>    // ... builds corresponding JSX HTML li elements for each error in the array...
                             );
                         });
-                        this.setState({ errors });
+                        this.setState({ errors });          // ... and stores the error messages array in the State
                     }
                 })
                 .catch( () => {
-                    this.props.history.push("/error");
+                    this.props.history.push("/error");      // If an unexpected error happen, redirects to 'error'
                 });
         } else {
-            this.setState({ errors: [ 'Passwords do not match' ] });
+            this.setState({ errors: [ 'Passwords do not match' ] });    // Password validation
         }
     }
 
     render() {
-        // Storing state properties into variables
         const {
             firstName,
             lastName,
@@ -69,11 +68,13 @@ export default class UserSignIn extends Component {
             password,
             confirmPassword,
             errors,
-        } = this.state;
+        } = this.state;     // Storing state properties into variables
 
         return (
             <div className="form--centered">
                 <h2>Sign Up</h2>
+
+                {/** If there are errors in the errors array, displays an errors list */}
                 { errors.length > 0 ?
                     (
                     <div className="validation--errors">

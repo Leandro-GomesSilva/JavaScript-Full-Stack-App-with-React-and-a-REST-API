@@ -8,9 +8,9 @@ import Context from '../Context';
 
 /*
  *  CourseDetail Component
- *  This is a stateful class component. 
- *  It retrieves the details of the selected Course from the API and displays it.
- *   
+ *      This is a stateful class component that retrieves the details of the selected Course from the API and displays it.
+ *      It also renders an 'Update button' for navigating to the corresponding component and a 'Delete button' that sends
+ *  a DELETE request to the API.
  */
 
 class CourseDetail extends Component {
@@ -22,35 +22,36 @@ class CourseDetail extends Component {
         user: [],
     }
 
+    // Fetches course data when the component mounts
     componentDidMount() {
-        this.context.data.getCourseById(this.props.match.params.id)
+        this.context.data.getCourseById(this.props.match.params.id)     // Calls the API route
             .then(data => {
                 if (data) {
-                    this.setState({ 
+                    this.setState({     // Stores the API data in the state
                         courseInformation: data,
                         user: data.User,
                     });
                 } else {
-                    this.props.history.push("/notfound");
+                    this.props.history.push("/notfound");   // If no data is returned, redirects to 'notfound'
                 }
             })
             .catch( () => {
-                this.props.history.push("/error");
+                this.props.history.push("/error");      // If further errors happen, redirects to 'error'
             });
     }
 
     handleDeleteCourse = () => {
-        const authorizedUser = {
+        const authorizedUser = {        // Stores user data in an object
             username: this.context.authenticatedUser.emailAddress,
             password: this.context.authenticatedUser.password,
         }
         
-        this.context.data.deleteCourse(this.props.match.params.id, authorizedUser)
+        this.context.data.deleteCourse(this.props.match.params.id, authorizedUser)      // Calls the API route
             .then( () => {
-                this.props.history.push("/");
+                this.props.history.push("/");       // If delete was successful, redirects to main route
             })
             .catch( () => {
-                this.props.history.push("/error");
+                this.props.history.push("/error");  // If any errors happen, redirects to 'error'
             });
     }
 
@@ -58,12 +59,14 @@ class CourseDetail extends Component {
         const {
             courseInformation,
             user,
-        } = this.state;
+        } = this.state;     // Storing state properties into variables
         
         return (
             <React.Fragment>
                 <div className="actions--bar">
                         <div className="wrap">
+                                
+                                {/** If there is an authenticated user and this user owns the course, displays options header */}
                                 { this.context.authenticatedUser && this.context.authenticatedUser.id === user.id ? (
                                     <React.Fragment>
                                         <Link to={{

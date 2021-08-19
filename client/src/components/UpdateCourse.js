@@ -5,6 +5,13 @@ import { withRouter } from 'react-router';
 // Importing the instance of the Context API
 import Context from '../Context';
 
+/*
+ *  UpdateCourse Component
+ *      This is a stateful class component that renders a form to update a course.
+ *      It also renders a button to send a PUT to the REST API.
+ *      It is accessed via a Private Route. 
+ */
+
 class UpdateCourse extends Component {
     
     static contextType = Context;   // Granting access to Context
@@ -20,20 +27,23 @@ class UpdateCourse extends Component {
         errors: [],
     }
 
-    // If the user loads the page by directly inputing its address in the browser i.e. in case the data has not been fetched before, then it will be fetched here.
-    // If the user loaded the page from the previous "CourseDetails" component, the course data will be passed to State via the 'location.state' props, in order to avoid an unnecessary data fetch.
+    /*      If the user loads the page by directly inputing its address in the browser i.e. in case the data 
+     *  has not been fetched before, then it will be fetched here.
+     *      If the user loaded the page from the previous "CourseDetails" component, the course data will be 
+     *  passed to State via the 'location.state' props, in order to avoid an unnecessary data fetch.
+     */
     componentDidMount() {
         if (!this.props.location.state) {
             this.context.data.getCourseById(this.props.id)
             .then(data => {
                 if (!data) {
-                    this.props.history.push("/notfound");
+                    this.props.history.push("/notfound");       // If no data is returned, redirects to 'notfound'
 
                 } else if (this.context.authenticatedUser.id !== data.User.id ) {
-                    this.props.history.push("/forbidden");
+                    this.props.history.push("/forbidden");      // If data is returned but the course's user ID does not match the authenticated user, redirects to 'forbidden'
 
                 } else {
-                    this.setState({ 
+                    this.setState({                     // Stores data in the State
                         courseTitle: data.title,
                         estimatedTime: data.estimatedTime || "",
                         courseDescription: data.description,
@@ -45,10 +55,10 @@ class UpdateCourse extends Component {
                 }
             })
             .catch( () => {
-                this.props.history.push("/error");
+                this.props.history.push("/error");      // If an unexpected error happen, redirects to 'error'
             });
         } else {
-            this.setState({
+            this.setState({                             // If this component was accessed via the Link component of the CourseDetail route, the if statement lands here
                 courseTitle: this.props.location.state.courseTitle,
                 estimatedTime: this.props.location.state.estimatedTime || "",
                 courseDescription: this.props.location.state.courseDescription,
@@ -74,7 +84,7 @@ class UpdateCourse extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        const updatedCourse = { 
+        const updatedCourse = {         // Stores the update course data in an object
             title: this.state.courseTitle,
             description: this.state.courseDescription,
             estimatedTime: this.state.estimatedTime,
@@ -82,31 +92,30 @@ class UpdateCourse extends Component {
             userId: this.context.authenticatedUser.id,
         }
 
-        const authenticatedUser = {
+        const authenticatedUser = {     // Stores user data in an object
             username: this.context.authenticatedUser.emailAddress,
             password: this.context.authenticatedUser.password,
         }
         
-        this.context.data.updateCourse(this.props.id, updatedCourse, authenticatedUser)
+        this.context.data.updateCourse(this.props.id, updatedCourse, authenticatedUser)     // Calls the API route
             .then( errorsArray => {
-                if (errorsArray.length === 0) {
+                if (errorsArray.length === 0) {         // If no errors are returned, redirects to the course route
                     this.props.history.push(`/courses/${this.props.id}`);
-                } else {
+                } else {                                // If the API return an errors array...
                     const errors = errorsArray.map( (error, index) => {
                         return (
-                        <li key={index}>{error}</li>
+                        <li key={index}>{error}</li>    // ... builds corresponding JSX HTML li elements for each error in the array...
                         );
                     });
-                    this.setState({ errors });
+                    this.setState({ errors });          // ... and stores the error messages array in the State
                 }
             })
             .catch( () => {
-                this.props.history.push("/error");
+                this.props.history.push("/error");      // If an unexpected error happen, redirects to 'error'
             });
     }
 
     render() {
-        // Storing state properties into variables
         const {
             courseTitle,
             estimatedTime,
@@ -115,11 +124,13 @@ class UpdateCourse extends Component {
             firstName,
             lastName,
             errors,
-        } = this.state;
+        } = this.state;     // Storing state properties into variables
 
         return (
             <div className="wrap">
                 <h2>Update Course</h2>
+
+                {/** If there are errors in the errors array, displays an errors list */}
                 { errors.length > 0 ?
                     (
                     <div className="validation--errors">

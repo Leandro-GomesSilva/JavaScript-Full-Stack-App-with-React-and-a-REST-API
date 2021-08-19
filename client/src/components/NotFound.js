@@ -1,6 +1,12 @@
 // Importing React related modules
 import React from 'react';
 
+/*
+ *  NotFound Component
+ *      This is a stateless functional component that renders a user friendly message
+ *  in case a requested page cannot be found.
+ */
+
 const NotFound = () => {
     
     return (

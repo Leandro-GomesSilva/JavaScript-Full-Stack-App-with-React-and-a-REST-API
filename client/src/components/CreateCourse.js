@@ -4,6 +4,14 @@ import React, { Component } from 'react';
 // Importing the instance of the Context API
 import Context from '../Context';
 
+/*
+ *  CreateCourse Component
+ *      This is a stateful class component that renders a form to create a new course.
+ *      It also renders a button to send a POST request to the REST API and another
+ *  button tha returns the user to the main route.
+ *      It is accessed via a Private Route.
+ */
+
 export default class CreateCourse extends Component {
     
     static contextType = Context;   // Granting access to Context
@@ -16,22 +24,22 @@ export default class CreateCourse extends Component {
         errors: [],
     }
 
-    // This method handles 'value' changes for the 4 input and textarea tags of this component
+    // Handles 'value' changes for the 4 input and textarea tags of this component
     handleValueChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     }
     
-    // This method handles the 'cancel' button, sending the user back to the previous route.
+    // Handles the 'cancel' button, sending the user back to the main route
     handleCancelButton = (e) => {
         e.preventDefault();
-        this.props.history.goBack();
+        this.props.history.push("/");
     }
 
-    // The following method sends a POST request to the REST API
+    // Sends a POST request to the REST API
     handleSubmit = (e) => {
         e.preventDefault();
 
-        const newCourse = { 
+        const newCourse = {             // Stores the new course data in an object
             title: this.state.courseTitle,
             description: this.state.courseDescription,
             estimatedTime: this.state.estimatedTime,
@@ -39,42 +47,43 @@ export default class CreateCourse extends Component {
             userId: this.context.authenticatedUser.id,
         }
 
-        const authenticatedUser = {
+        const authenticatedUser = {     // Stores user data in an object
             username: this.context.authenticatedUser.emailAddress,
             password: this.context.authenticatedUser.password,
         }
         
-        this.context.data.createCourse(newCourse, authenticatedUser)
+        this.context.data.createCourse(newCourse, authenticatedUser)    // Calls the API route
             .then( errorsArray => {
-                if (errorsArray.length === 0) {
+                if (errorsArray.length === 0) {         // If no errors are returned, redirects to main route
                     this.props.history.push("/");
-                } else {
+                } else {                                // If the API return an errors array...
                     const errors = errorsArray.map( (error, index) => {
                         return (
-                        <li key={index}>{error}</li>
+                        <li key={index}>{error}</li>    // ... builds corresponding JSX HTML li elements for each error in the array...
                         );
                     });
-                    this.setState({ errors });
+                    this.setState({ errors });          // ... and stores the error messages array in the State
                 }
             })
             .catch( () => {
-                this.props.history.push("/error");
+                this.props.history.push("/error");      // If any errors happen, redirects to 'error'
             });
     }
 
     render() {
-        // Storing state properties into variables
         const {
             courseTitle,
             courseDescription,
             estimatedTime,
             materialsNeeded,
             errors,
-        } = this.state;
+        } = this.state;     // Storing state properties into variables
         
         return (
             <div className="wrap">
                 <h2>Create Course</h2>
+                
+                {/** If there are errors in the errors array, displays an errors list */}
                 { errors.length > 0 ?
                     (
                     <div className="validation--errors">

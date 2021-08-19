@@ -6,10 +6,10 @@ import { NavLink } from 'react-router-dom';
 import { Consumer } from '../Context';
 
 /*
- *  This component renders the Header of the application. 
- *  It is a stateless functional component that displays the top menu bar and contains the sign-in and sign-up buttons 
- *  (if there's not an authenticated user) or the user's name and the sign-out button (if there's an authenticated user).
- * 
+ *  Header Component
+ *      This is a stateless functional component that renders the header of the application,
+ *  containing the sign-in and sign-up buttons (if there's not an authenticated user) or the 
+ *  user's name and the sign-out button (if there's an authenticated user).
  */
 
 const Header = () => {

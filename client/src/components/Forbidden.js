@@ -1,6 +1,12 @@
 // Importing React related modules
 import React from 'react';
 
+/*
+ *  Forbidden Component
+ *      This is a stateless functional component that renders a user friendly message
+ *  saying the user may not access a page.
+ */
+
 const Forbidden = () => {
     
     return (

@@ -18,7 +18,7 @@ import NotFound from './components/NotFound';
 import Forbidden from './components/Forbidden';
 import UnhandledError from './components/UnhandledError';
 
-// Redeclaring the App Component as a Class Component
+// Redeclaring the App Component as a Class Component and implementing a BrowserRouter with a Switch for the app routes
 class App extends Component {
     render() {
         return (
