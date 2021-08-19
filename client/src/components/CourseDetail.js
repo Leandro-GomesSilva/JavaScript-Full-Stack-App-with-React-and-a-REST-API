@@ -39,6 +39,21 @@ class CourseDetail extends Component {
             });
     }
 
+    handleDeleteCourse = () => {
+        const authorizedUser = {
+            username: this.context.authenticatedUser.emailAddress,
+            password: this.context.authenticatedUser.password,
+        }
+        
+        this.context.data.deleteCourse(this.props.match.params.id, authorizedUser)
+            .then( () => {
+                this.props.history.push("/");
+            })
+            .catch( () => {
+                this.props.history.push("/error");
+            });
+    }
+
     render() {  
         const {
             courseInformation,
@@ -63,7 +78,7 @@ class CourseDetail extends Component {
                                                 userId: user.id,
                                             }
                                         }} className="button">Update Course</Link>
-                                        <Link to={`/courses/${this.props.id}/update`} className="button">Delete Course</Link>
+                                        <Link to="#" className="button" onClick={this.handleDeleteCourse}>Delete Course</Link>
                                     </React.Fragment>
                                 ) : ( 
                                     null 
