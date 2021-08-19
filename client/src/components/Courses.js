@@ -23,7 +23,10 @@ class Courses extends Component {
     // Retrieving API data after the component mounts
     componentDidMount() {
         this.context.data.getCourses()
-            .then(data => data.map( course => this.setState( prevState => ({ courseObjects: [ ...prevState.courseObjects, course ] })) ));
+            .then(data => data.map( course => this.setState( prevState => ({ courseObjects: [ ...prevState.courseObjects, course ] })) ))
+            .catch( () => {
+                this.props.history.push("/error");
+            });
     }
 
     render() {  

@@ -57,6 +57,9 @@ export default class CreateCourse extends Component {
                     this.setState({ errors });
                 }
             })
+            .catch( () => {
+                this.props.history.push("/error");
+            });
     }
 
     render() {

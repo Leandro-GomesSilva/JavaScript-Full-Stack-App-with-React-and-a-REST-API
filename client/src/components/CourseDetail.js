@@ -7,13 +7,13 @@ import ReactMarkdown from 'react-markdown';
 import Context from '../Context';
 
 /*
- *  CourseDetails Component
+ *  CourseDetail Component
  *  This is a stateful class component. 
  *  It retrieves the details of the selected Course from the API and displays it.
  *   
  */
 
-class CourseDetails extends Component {
+class CourseDetail extends Component {
 
     static contextType = Context;   // Granting access to Context
 
@@ -23,11 +23,20 @@ class CourseDetails extends Component {
     }
 
     componentDidMount() {
-        this.context.data.getCourseById(this.props.id)
-            .then(data => this.setState({ 
-                courseInformation: data,
-                user: data.User,
-            }));
+        this.context.data.getCourseById(this.props.match.params.id)
+            .then(data => {
+                if (data) {
+                    this.setState({ 
+                        courseInformation: data,
+                        user: data.User,
+                    });
+                } else {
+                    this.props.history.push("/notfound");
+                }
+            })
+            .catch( () => {
+                this.props.history.push("/error");
+            });
     }
 
     render() {  
@@ -51,6 +60,7 @@ class CourseDetails extends Component {
                                                 materialsNeeded: courseInformation.materialsNeeded,
                                                 firstName: user.firstName,
                                                 lastName: user.lastName,
+                                                userId: user.id,
                                             }
                                         }} className="button">Update Course</Link>
                                         <Link to={`/courses/${this.props.id}/update`} className="button">Delete Course</Link>
@@ -89,7 +99,7 @@ class CourseDetails extends Component {
     }
 }
 
-export default CourseDetails;     
+export default CourseDetail;     
 
 
 

@@ -16,30 +16,46 @@ class UpdateCourse extends Component {
         materialsNeeded: '',
         firstName: '',
         lastName: '',
+        userId: '',
         errors: [],
     }
 
-    // If the user loads the page by directly inputing its address in the browser i.e. in case the data has not me fetched before, then it will be fetched here.
-    // If the user loaded the page from the previous "CourseDetails" component, the course data will be passed to State via the 'location' props, in order to avoid an unnecessary data fetch.
+    // If the user loads the page by directly inputing its address in the browser i.e. in case the data has not been fetched before, then it will be fetched here.
+    // If the user loaded the page from the previous "CourseDetails" component, the course data will be passed to State via the 'location.state' props, in order to avoid an unnecessary data fetch.
     componentDidMount() {
-        if (!this.props.locations) {
+        if (!this.props.location.state) {
             this.context.data.getCourseById(this.props.id)
-            .then(data => this.setState({ 
-                courseTitle: data.title,
-                estimatedTime: data.estimatedTime || "",
-                courseDescription: data.description,
-                materialsNeeded: data.materialsNeeded || "",
-                firstName: data.User.firstName,
-                lastName: data.User.lastName,
-            }));
+            .then(data => {
+                if (!data) {
+                    this.props.history.push("/notfound");
+
+                } else if (this.context.authenticatedUser.id !== data.User.id ) {
+                    this.props.history.push("/forbidden");
+
+                } else {
+                    this.setState({ 
+                        courseTitle: data.title,
+                        estimatedTime: data.estimatedTime || "",
+                        courseDescription: data.description,
+                        materialsNeeded: data.materialsNeeded || "",
+                        firstName: data.User.firstName,
+                        lastName: data.User.lastName,
+                        userId: data.User.id,
+                    });
+                }
+            })
+            .catch( () => {
+                this.props.history.push("/error");
+            });
         } else {
             this.setState({
-                courseTitle: this.props.location.state.title,
-                estimatedTime: this.props.location.state.estimatedTime,
+                courseTitle: this.props.location.state.courseTitle,
+                estimatedTime: this.props.location.state.estimatedTime || "",
                 courseDescription: this.props.location.state.courseDescription,
-                materialsNeeded: this.props.location.state.materialsNeeded,
-                firstName: this.props.location.state.User.firstName,
-                lastName: this.props.location.state.User.lastName,
+                materialsNeeded: this.props.location.state.materialsNeeded || "",
+                firstName: this.props.location.state.firstName,
+                lastName: this.props.location.state.lastName,
+                userId: this.props.location.state.userId,
             });
         }
     }
@@ -84,6 +100,9 @@ class UpdateCourse extends Component {
                     this.setState({ errors });
                 }
             })
+            .catch( () => {
+                this.props.history.push("/error");
+            });
     }
 
     render() {

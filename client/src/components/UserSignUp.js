@@ -52,6 +52,9 @@ export default class UserSignIn extends Component {
                         this.setState({ errors });
                     }
                 })
+                .catch( () => {
+                    this.props.history.push("/error");
+                });
         } else {
             this.setState({ errors: [ 'Passwords do not match' ] });
         }
