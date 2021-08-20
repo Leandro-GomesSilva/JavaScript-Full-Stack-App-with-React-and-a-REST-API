@@ -41,8 +41,15 @@ export default class UserSignIn extends Component {
             
             this.context.data.createUser(newUser)           // Calls the API route
                 .then( errorsArray => {
-                    if (errorsArray.length === 0) {         // If no errors are returned, redirects to the course route
-                        this.props.history.push("/");
+                    if (errorsArray.length === 0) {         // If no errors are returned, signs in the new user and redirects them to the main route
+                        this.context.actions.signIn(this.state.emailAddress, this.state.password)
+                            .then ( () => {
+                                this.props.history.push("/");
+                            })
+                            .catch( () => {
+                                this.props.history.push("/error");      // If an unexpected error happen, redirects to 'error'
+                            });
+                        
                     } else {
                         const errors = errorsArray.map( (error, index) => {
                             return (
@@ -55,6 +62,7 @@ export default class UserSignIn extends Component {
                 .catch( () => {
                     this.props.history.push("/error");      // If an unexpected error happen, redirects to 'error'
                 });
+
         } else {
             this.setState({ errors: [ 'Passwords do not match' ] });    // Password validation
         }
